@@ -1,0 +1,13 @@
+<textarea 
+    #uploadedText
+    class="form-control" 
+    placeholder="Paste the content in your configuration file here."
+></textarea>
+<div class="d-flex mt-4">
+    <button 
+        class="btn btn-primary col-4 w-100 mx-auto rounded-pill" 
+        (click)="uploadConfig(uploadedText.value)"
+    >
+        Upload Configuration
+    </button>
+</div>

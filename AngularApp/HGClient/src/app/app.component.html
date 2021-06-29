@@ -1,0 +1,36 @@
+<div class="container-fluid p-0 mx-auto">
+<nav class="navbar navbar-dark navbar-expand-sm bg-dark mb-5">
+<h2 class="navbar-brand">Hand Gesture Mapper</h2>
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item">
+      <button  (click)=setActivePage(0)
+      class="m-1 btn btn-dark text-light nav-link" Button>Tutorial</button>
+  </li>
+  <li class="nav-item">
+      <button  (click)=setActivePage(1)
+      class="m-1 btn btn-dark text-light nav-link" Button>Create Gesture Configuration</button>
+  </li>
+  <li class="nav-item">
+      <button  (click)=setActivePage(2)
+      class="m-1 btn btn-dark text-light nav-link" Button>View Generated Code</button>
+  </li>
+  <li class="nav-item">
+      <button (click)=setActivePage(3)
+      class="m-1 btn btn-dark text-light nav-link" Button>View Configuration back up</button>
+  </li>
+</ul>
+</nav>
+<app-tutorial *ngIf="activePage==0"></app-tutorial>
+<app-gesture-config 
+    [hidden]="activePage!=1"
+    (codeGenerated)="getTimestamp()"
+></app-gesture-config>
+<app-generated-code 
+    *ngIf="activePage==2"
+    [timestamp]="timestamp"
+></app-generated-code>
+<app-config-backup 
+    *ngIf="activePage==3"
+    [timestamp]="timestamp"
+></app-config-backup>
+</div>

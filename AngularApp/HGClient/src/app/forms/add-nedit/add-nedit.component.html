@@ -1,0 +1,211 @@
+<div class="row m-0 p-0">
+  <div class="col-6 p-0">
+    <form [formGroup]="GestureForm" (ngSubmit)="submitForm()">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" (click)="showSwipeGesture = true">Swipe Gesture</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="showSwipeGesture = false">Action Gesture</a>
+        </li>
+      </ul>
+      <div class="form-group" [hidden]="!showSwipeGesture">
+          <label class="ml-2">Specify your Hand Gesture State</label>
+          <div class="form-check ml-2">
+              <input class="form-check-input" type="checkbox" value="" id="thumb" formControlName="thumb">
+              <label class="form-check-label" for="thumb">
+                  Thumb : {{getFingerState('thumb')}}
+              </label>
+          </div>
+          <div class="form-check ml-2">
+              <input class="form-check-input" type="checkbox" value="" id="index" formControlName="index">
+              <label class="form-check-label" for="index">
+                  index Finger : {{getFingerState('index')}}
+              </label>
+          </div>
+          <div class="form-check ml-2">
+              <input class="form-check-input" type="checkbox" value="" id="middle" formControlName="middle">
+              <label class="form-check-label" for="middle">
+                  middle Finger : {{getFingerState('middle')}}
+              </label>
+          </div>
+          <div class="form-check ml-2">
+              <input class="form-check-input" type="checkbox" value="" id="ring" formControlName="ring">
+              <label class="form-check-label" for="ring">
+                  ring Finger : {{getFingerState('ring')}}
+              </label>
+          </div>
+          <div class="form-check ml-2">
+              <input class="form-check-input" type="checkbox" value="" id="little" formControlName="little">
+              <label class="form-check-label" for="little">
+                  little Finger : {{getFingerState('little')}}
+              </label>
+          </div>
+          <p *ngIf="this.getGestureString()=='00000' && GestureForm.touched" class="text-danger font-weight-bold">
+            You can't use Fist(ALL fingers closed) as a gesture,
+            please specify a different hand state.
+            <br>
+            Ensure that atleast one of the fingers is open.
+          </p>
+          <div class="form-group my-2">
+            <label for="swipeSelectBox">Swipe Direction</label>
+            <select class="form-control" id="swipeSelectBox" formControlName="swipe" >
+              <option value="null">None</option>
+              <option value="up">Swipe Up</option>
+              <option value="down">Swipe Down</option>
+              <option value="left">Swipe Left</option>
+              <option value="right">Swipe Right</option>
+            </select>
+          </div>
+      </div>
+      <div class="row m-0 p-0" [hidden]="showSwipeGesture">
+        <div class="form-group col">
+          <label>INITIAL Gesture State</label>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="ithumb" formControlName="ithumb">
+              <label class="form-check-label" for="ithumb">
+                  Thumb : {{getFingerState('ithumb')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="iindex" formControlName="iindex">
+              <label class="form-check-label" for="iindex">
+                  index Finger : {{getFingerState('iindex')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="imiddle" formControlName="imiddle">
+              <label class="form-check-label" for="imiddle">
+                  middle Finger : {{getFingerState('imiddle')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="iring" formControlName="iring">
+              <label class="form-check-label" for="iring">
+                  ring Finger : {{getFingerState('iring')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="ilittle" formControlName="ilittle">
+              <label class="form-check-label" for="ilittle">
+                  little Finger : {{getFingerState('ilittle')}}
+              </label>
+          </div>
+        </div>
+        <div class="form-group col">
+          <label>FINAL Gesture State</label>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="fthumb" formControlName="fthumb">
+              <label class="form-check-label" for="fthumb">
+                  Thumb : {{getFingerState('fthumb')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="findex" formControlName="findex">
+              <label class="form-check-label" for="findex">
+                  index Finger : {{getFingerState('findex')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="fmiddle" formControlName="fmiddle">
+              <label class="form-check-label" for="fmiddle">
+                  middle Finger : {{getFingerState('fmiddle')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="fring" formControlName="fring">
+              <label class="form-check-label" for="fring">
+                  ring Finger : {{getFingerState('fring')}}
+              </label>
+          </div>
+          <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" value="" id="flittle" formControlName="flittle">
+              <label class="form-check-label" for="flittle">
+                  little Finger : {{getFingerState('flittle')}}
+              </label>
+          </div>
+        </div>
+        <p 
+          *ngIf="this.getGestureString('i') == this.getGestureString('f') && GestureForm.touched" 
+          class="text-danger font-weight-bold"
+        >
+          The Initial and Final hand States must be different for Action Gestures
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="actionSelectBox">Action To Be Performed</label>
+        <select class="form-control" id="actionSelectBox" formControlName="selectedAction">
+          <option [value]="null" selected disabled>Select an action</option>
+          <option [value]="1"> Create a new action</option>
+          <option *ngFor='let action of actionsList'>{{action.actionName}}</option>
+        </select>
+        <div class="form-group" [hidden]="GestureForm.controls['selectedAction'].value!='1'">
+          <hr>
+          <p><b>Create Your own hotkey combination</b></p>
+          <label for="actionName">Action Name</label>
+          <input type="text" class="form-control" id="actionName" placeholder="Give a name for your hotkey combination" formControlName="newActionName">
+          <label for="action">Action</label>
+          <ng-multiselect-dropdown
+            [placeholder]="'Select Your HotKey Combination'"
+            [settings]="dropdownSettings"
+            [data]="hotKeysList"
+            formControlName = "newAction"
+            >
+          </ng-multiselect-dropdown>
+          {{getHotKeyString(GestureForm.controls.newAction.value)}}
+          <hr>
+        </div>
+      </div>
+      <p 
+        *ngIf="GestureForm.controls.selectedAction.value == null && GestureForm.controls.selectedAction.touched"
+        class="text-danger font-weight-bold"
+      >
+        You didn't select an action to be perfomred, please selecting an action
+        <br>
+        Note: if you dont find a HotKey combination in the list, then
+        try creating your own hotkey using "create a new action" option
+      </p>
+      <div class="form-group">
+        <label for="appName">Select The Application For Using This Gesture</label>
+        <select class="form-control" id="appName" formControlName="selectedApp">
+          <option [value]="null" selected disabled>Select an Application</option>
+          <option [value]="1">Other Application</option>
+          <option *ngFor='let app of appNamesList'>{{app.appName}}</option>
+        </select>
+        <div class="form-group" [hidden]="GestureForm.controls.selectedApp.value!=1">
+          <hr>
+          <p><b>Specify your Application Details</b></p>
+          <label for="appName">Application Name</label>
+          <input type="text" class="form-control" id="appName" placeholder="Enter General name the Application" formControlName="newAppName">
+          <label for="orginalName">Application Process Name</label>
+          <input type="text" class="form-control" id="orginalName" placeholder="Enter Process name of the Application" formControlName="newOriginalName">
+          <hr>
+        </div>
+      </div>
+      <p 
+        *ngIf="GestureForm.controls.selectedApp.value==null && GestureForm.controls.selectedApp.touched" 
+        class="text-danger font-weight-bold"
+      >
+        You didn't select an application name, please try again after selecting an app name
+        <br>
+        Note: if you dont find an application name in the list,
+        try specifying your own application using "other application" option
+      </p>
+      <div class="form-group">
+        <label for="gestureName">Gesture Name</label>
+        <input type="text" class="form-control" id="gestureName" placeholder="Give a Name to your gesture Mapping" formControlName="name">
+      </div>
+      <div class="form-group my-2">
+          <button class="btn btn-success" >
+              {{formType}} Gesture Configuration
+          </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-6 p-0">
+    <app-hand-drawing
+    [fingers] = "fingerStates"
+    [dir] = "GestureForm.controls.swipe.value"
+  ></app-hand-drawing>
+  </div>
+</div>
